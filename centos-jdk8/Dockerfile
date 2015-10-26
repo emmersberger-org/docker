@@ -20,3 +20,5 @@ RUN alternatives --install /usr/bin/java java /usr/java/latest/bin/java 200000
 RUN alternatives --install /usr/bin/javac javac /usr/java/latest/bin/javac 200000
 
 ENV JAVA_HOME /usr/java/latest
+
+RUN rm /tmp/jdk-8-linux-x64.rpm
