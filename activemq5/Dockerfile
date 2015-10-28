@@ -22,9 +22,21 @@ RUN chmod 755 /usr/activemq/bin/activemq
 RUN useradd -M activemq -d /usr/activemq
 RUN chown -R activemq:users /usr/activemq
 
+# Configure data folder
+RUN mkdir -p /var/local/activemq
+RUN chown -R activemq:users /var/local/activemq
+
+# Configure logging folder
+RUN mkdir -p /var/log/activemq/
+RUN chown -R activemq:users /var/log/activemq
+COPY conf/log4j.properties /usr/activemq/conf/log4j.properties
+
+# Expose the required ports
+EXPOSE 61616 8161
+
 # Configure UNIX Service
 COPY bin/env /etc/default/activemq
 RUN chmod 644 /etc/default/activemq
 RUN ln -snf  /usr/activemq/bin/activemq /etc/init.d/activemq
 RUN chkconfig --add activemq
-RUN chkconfig activemq on
+COPY etc/profile.d/activemq.sh /etc/profile.d/activemq.sh

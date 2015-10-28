@@ -31,7 +31,7 @@ if [ -z "$ACTIVEMQ_OPTS" ] ; then
 fi
 
 # Uncomment to enable audit logging
-#ACTIVEMQ_OPTS="$ACTIVEMQ_OPTS -Dorg.apache.activemq.audit=true"
+ACTIVEMQ_OPTS="$ACTIVEMQ_OPTS -Dorg.apache.activemq.audit=true"
 
 # Set jvm jmx configuration
 # This enables jmx access over a configured jmx-tcp-port.
@@ -92,6 +92,7 @@ fi
 # ACTIVEMQ_BASE="$ACTIVEMQ_HOME"
 # ACTIVEMQ_CONF="$ACTIVEMQ_BASE/conf"
 # ACTIVEMQ_DATA="$ACTIVEMQ_BASE/data"
+ACTIVEMQ_DATA="/var/local/activemq"
 # ACTIVEMQ_TMP="$ACTIVEMQ_BASE/tmp"
 
 # Configure a user with non root privileges, if no user is specified do not change user
