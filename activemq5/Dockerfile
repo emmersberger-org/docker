@@ -2,7 +2,7 @@
 #
 # Version ActiveMQ5
 
-FROM cemmersb/centos-jdk8
+FROM cemmersb/centos-jdk7
 
 MAINTAINER Christoph Emmersberger, cemmersb@gmail.com
 
