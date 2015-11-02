@@ -2,41 +2,25 @@
 #
 # Version ActiveMQ5
 
-FROM cemmersb/centos-jdk7
+FROM cemmersb/centos-jdk8
 
 MAINTAINER Christoph Emmersberger, cemmersb@gmail.com
 
 ENV ACTIVEMQ_VERSION 5.12.1
+ENV ACTIVEMQ apache-activemq-$ACTIVEMQ_VERSION
+ENV ACTIVEMQ_HOME /opt/activemq
 
-RUN yum -y upgrade
+RUN \
+    curl -O http://archive.apache.org/dist/activemq/$ACTIVEMQ_VERSION/$ACTIVEMQ-bin.tar.gz && \
+    tar xf $ACTIVEMQ-bin.tar.gz -C /opt/ && \
+    rm $ACTIVEMQ-bin.tar.gz && \
+    ln -s /opt/$ACTIVEMQ $ACTIVEMQ_HOME && \
+    useradd -r -M -d $ACTIVEMQ_HOME activemq && \
+    chown activemq:activemq /opt/$ACTIVEMQ -R
 
-# Download, extract and move activemq to final destination
-RUN wget "https://repository.apache.org/content/repositories/releases/org/apache/activemq/apache-activemq/$ACTIVEMQ_VERSION/apache-activemq-$ACTIVEMQ_VERSION-bin.tar.gz" -O /tmp/apache-activemq-$ACTIVEMQ_VERSION-bin.tar.gz
-RUN tar xvfz /tmp/apache-activemq-$ACTIVEMQ_VERSION-bin.tar.gz -C /usr/
-RUN mv /usr/apache-activemq-$ACTIVEMQ_VERSION /usr/activemq
-RUN rm /tmp/apache-activemq-$ACTIVEMQ_VERSION-bin.tar.gz
-COPY bin/activemq /usr/activemq/bin/activemq
-RUN chmod 755 /usr/activemq/bin/activemq
+USER activemq
 
-# Add activemq user
-RUN useradd -M activemq -d /usr/activemq
-RUN chown -R activemq:users /usr/activemq
-
-# Configure data folder
-RUN mkdir -p /var/local/activemq
-RUN chown -R activemq:users /var/local/activemq
-
-# Configure logging folder
-RUN mkdir -p /var/log/activemq/
-RUN chown -R activemq:users /var/log/activemq
-COPY conf/log4j.properties /usr/activemq/conf/log4j.properties
-
-# Expose the required ports
+WORKDIR $ACTIVEMQ_HOME
 EXPOSE 61616 8161
 
-# Configure UNIX Service
-COPY bin/env /etc/default/activemq
-RUN chmod 644 /etc/default/activemq
-RUN ln -snf  /usr/activemq/bin/activemq /etc/init.d/activemq
-RUN chkconfig --add activemq
-COPY etc/profile.d/activemq.sh /etc/profile.d/activemq.sh
+CMD ["/bin/bash", "-c", "bin/activemq console"]
