@@ -29,7 +29,7 @@ This will get your docker machine ready to run docker
 #Start the single node cassandra by mapping out the configuration from the repo to the container
 ```docker run -d \
     -v /<path to docker repo>/cassandra/dev-single-node-ssl/cassandraconfig/:/etc/cassandra \
-    -p 9142:9142 -p 9171:9171 \
+    -p 9142:9142 -p 9171:9171 -p 8888:8888 \
     --name dev-cassandra-ssl \
     cassandra/singlenodessl:latest
 ```
