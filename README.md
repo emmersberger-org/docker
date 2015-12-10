@@ -1,7 +1,7 @@
 # docker
 The docker repository contains several subprojects resulting in docker images. All images can be found on Docker Hub https://hub.docker.com/u/cemmersb/
 
-## Image Overview
+# Image Overview
 | Repository  |Tag    | Latest | Description                   |
 |-------------|-------|--------|-------------------------------|
 | activemq5   | 0.0.3 | x      | ActiveMQ 5.12.1 on CentOS     |
@@ -27,4 +27,14 @@ $ docker run -i -t cemmersb/centos-jdk8 bash
 ```
 $ docker pull cemmersb/centos-jdk7
 $ docker run -i -t cemmersb/centos-jdk7 bash
+```
+
+# Docker Compose Overview
+| Service | Version | Description                                 |
+|---------|---------|---------------------------------------------|
+| mysql56 | 5.6     | Docker compose file to run mysql server 5.6 |
+
+## Run: mysql56
+```
+$ docker-compose run --service-ports db
 ```
