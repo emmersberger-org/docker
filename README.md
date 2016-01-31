@@ -14,7 +14,7 @@ The docker repository contains several subprojects resulting in docker images. A
 ## Run: activemq5
 ```
 $ docker pull cemmersb/activemq5
-$ docker run -i -t -p=61616:61616 -p=8161:8161 -d --name=activemq_1 cemmersb/activemq5 /bin/bash
+$ docker run -i -t -p=61616:61616 -p=8161:8161 -d --name=activemq cemmersb/activemq5 /bin/bash -c 'bin/activemq console'
 ```
 
 ## Run: centos-jdk8
